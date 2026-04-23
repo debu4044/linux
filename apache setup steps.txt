@@ -1,0 +1,6 @@
+sudo apt install apache2 -y 
+sudo systemctl start apache2
+sudo systemctl status apache2
+sudo nano /var/www/html/index.html
+<h1>Apache is working</h1>
+http://localhost
