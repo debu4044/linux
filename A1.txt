@@ -1,0 +1,646 @@
+1.	Write a shell script to show various system configuration like currently logged user and his logname, your current shell, home directory, operating system type, current path setting, current working directory, show currently logged number of users, show memory information, Hard disk information like size of hard-disk, cache memory, model etc, and file system mounted.
+
+#!/bin/bash
+echo "currently logged in user :$(whoami)"
+echo "Logname : $(logname 2>/dev/null || echo $USER)"
+echo "Current shell :$SHELL"
+echo "home directory :$HOME"
+echo "Operating system type :$(uname -o 2>/dev/null || uname-s)"
+echo "Current path setting :$PATH"
+echo "Current working directory :$(pwd)"
+echo "Logged in user count :$(who | wc -l)"
+echo "Memory info"
+free -h
+echo "CPU info"
+lscpu
+echo "Disk info"
+lsblk
+echo "disk usage"
+df -h
+echo "Mounted file system"
+mount
+
+2.	write a shell script to find the factorial of given integer
+
+#!/bin/bash
+echo -n "Enter a num"
+read num
+fact=1
+for ((i=1;i<=num;i++))
+do
+fact=$((fact*i))
+done
+echo "$fact"
+ 
+1. Write a shell script to add user and password on Linux system.
+
+#!/bin/bash
+echo -n "enter username: "
+read username
+if id "$username" &>/dev/null;
+then
+echo "user already exists"
+exit 1
+fi
+sudo useradd -m "$username"
+echo "set password"
+sudo passwd "$username"
+echo "user $username created"
+
+2. Write a shell script to print last login details.
+
+#!/bin/bash
+echo "last login details  of current user"
+last $USER
+echo "last login details of all user"
+last
+echo "current logged in user name:"
+who
+
+3. Write a shell script to upgrade and cleans the system automatically instead
+of doing it manually.
+
+#!/bin/bash
+echo "Updating system"
+sudo apt update
+echo "Upgrading packages"
+sudo apt upgrade -y
+echo "Removing unnecessary files"
+sudo apt autoremove -y
+echo "Cleaning cache"
+sudo apt autoclean
+ 
+Write script to perform following String Operation
+•	Find Length of String
+•	Find and Replace String
+•	To Concatenate String
+•	Reversing the string 
+
+#!/bin/bash
+echo "Enter a string:"
+read str
+echo "Length of string: ${#str}"
+echo "Enter word to find:"
+read find
+echo "Enter word to replace:"
+read replace
+echo "After replacement: ${str/$find/$replace}"
+echo "Enter another string to concatenate:"
+read str2
+echo "Concatenated string: $str $str2"
+echo "Reversed string: $(echo "$str" | rev)"
+ 
+a.Write a shell script to delete all log files present inside your var/log directory
+b. Write script to check if user is root user
+c. Write script to print number of files and folders
+d. Write Script to Create Directories
+
+#!/bin/bash
+echo "Deleting all .log files in /var/log..."
+sudo rm -f /var/log/*.log
+
+echo "check if user root or not"
+if [ "$EUID" -eq 0 ]
+then
+echo "You are root user"
+else
+echo "You are NOT root user"
+fi
+
+echo "number of folders and files in directory"
+echo "Enter directory path:"
+read dir
+files=$(find "$dir" -type f | wc -l)
+folders=$(find "$dir" -type d | wc -l)
+echo "Number of files: $files"
+echo "Number of folders: $folders"
+
+echo "create directories"
+echo "Enter directory name:"
+read directory
+mkdir "$directory"
+echo "Directory created"
+ 
+Write Shell Script to find maximum of three numbers, read number from user
+
+#!/bin/bash
+echo "Enter first number:"
+read a
+echo "Enter second number:"
+read b
+echo "Enter third number:"
+read c
+if [ $a -ge $b ] && [ $a -ge $c ]
+then
+max=$a
+elif [ $b -ge $a ] && [ $b -ge $c ]
+then
+max=$b
+else
+max=$c
+fi
+echo "Maximum number is: $max"
+ 
+Write a script that accepts the hostname and IP address as command-line
+arguments and adds them to the /etc/hosts file.
+Write a shell script that delete all lines containing a specified word
+Write Bash script to display name and a greeting message with some information
+
+#!/bin/bash
+ip=$1
+host=$2
+echo "Adding to /etc/hosts"
+echo "$ip $host" | sudo tee -a /etc/hosts
+echo "Entry added: $ip $host"
+
+how to run - ./script.sh 192.168.1.10 myserver
+
+#!/bin/bash
+echo "Enter filename:"
+read file
+echo "Enter word to delete:"
+read word
+sed -i "/$word/d" "$file"
+echo "Lines containing '$word' deleted"
+
+how to run – normal later in filename write - jash.txt
+
+#!/bin/bash
+echo "Enter your name:"
+read name
+echo "Hello, $name!"
+echo "Welcome to the system"
+echo "Today is: $(date)"
+echo "Your username is: $USER"
+echo "Your home directory is: $HOME"
+ 
+Write Menu Drive program using Shell script to Perform Following operation like Addition, Subtraction , multiplication, Division, remainder 
+
+#!/bin/bash
+echo "Choose operation:"
+echo "1. Addition"
+echo "2. Subtraction"
+echo "3. Multiplication"
+echo "4. Division"
+echo "5. Remainder"
+read choice
+echo "Enter first number:"
+read a
+echo "Enter second number:"
+read b
+case $choice in
+1) echo "Result: $((a + b))" ;;
+2) echo "Result: $((a - b))" ;;
+3) echo "Result: $((a * b))" ;;
+4) echo "Result: $((a / b))" ;;
+5) echo "Result: $((a % b))" ;;
+*) echo "Invalid choice" ;;
+esac
+ 
+Write shell Script to display Following information using environment variables
+like SHELL,USER,PWD,PATH,LANG,HOME,BASH_VERSION,BASH_VERSINFO
+HOSTNAME,UID etc
+
+#!/bin/bash
+echo "User                  : $USER"
+echo "Shell                  : $SHELL"
+echo "Current Dir        : $PWD"
+echo "Path                    : $PATH"
+echo "Language            : $LANG"
+echo "Home Directory  : $HOME"
+echo "Bash Version      : $BASH_VERSION"
+echo "Bash Info            : ${BASH_VERSINFO[@]}"
+echo "Hostname           : $HOSTNAME"
+echo "User ID              : $UID"
+
+Write Shell script using for loop to generate fibonacci Series till the limit specified
+by user
+
+#!/bin/bash
+echo –n "Enter limit:"
+read limit
+a=0
+b=1
+echo "Fibonacci Series:"
+for (( i=1; i<=limit; i++ ))
+do
+echo "$a "
+c=$((a + b))
+a=$b
+b=$c
+done
+echo
+ 
+Write shell script to perform Following String Operations
+1. Checks if the given string operand size is non-zero
+2. Checks if the given string operand size is zero
+3. Checks if the value of two operands are equal
+4. Checks if the value of two operands are not equal
+5. Checks if str is not the empty string; if it is empty (Same as 2)
+
+#!/bin/bash
+echo "Enter first string:"
+read str1
+echo "Enter second string:"
+read str2
+
+if [ -n "$str1" ]
+then
+echo "String1 is NOT empty"
+else
+echo "String1 is empty"
+fi
+
+if [ -z "$str1" ]
+then
+echo "String1 is empty"
+else
+echo "String1 is NOT empty"
+fi
+
+if [ "$str1" = "$str2" ]
+then
+echo "Both strings are equal"
+else
+echo "Strings are not equal"
+fi
+
+if [ "$str1" != "$str2" ]
+then
+echo "Strings are not equal"
+else
+echo "Strings are equal"
+fi
+ 
+Write Shell Script to perform Following Operations
+1. Checks if file is a block special file
+2. Checks if file is a character special file
+3. Checks if file is a directory
+4. Checks if file is an ordinary file as opposed to a directory or specialfile
+5. Checks if file has its set group ID (SGID) bit set
+6. Checks if file has its sticky bit set
+7. Checks if file is a named pipe
+8. Checks if file descriptor is open and associated with a terminal
+
+#!/bin/bash
+echo "Enter file name or path:"
+read file
+
+# 1. Block special file
+if [ -b "$file" ]
+then
+echo "It is a block special file"
+fi
+
+# 2. Character special file
+if [ -c "$file" ]
+then
+echo "It is a character special file"
+fi
+
+# 3. Directory
+if [ -d "$file" ]
+then
+echo "It is a directory"
+fi
+
+# 4. Ordinary file (regular file)
+if [ -f "$file" ]
+then
+echo "It is a regular file"
+fi
+
+ 
+# 5. SGID bit set
+if [ -g "$file" ]
+then
+echo "SGID bit is set"
+fi
+
+# 6. Sticky bit set
+if [ -k "$file" ]
+then
+echo "Sticky bit is set"
+fi
+
+# 7. Named pipe
+if [ -p "$file" ]
+echo "It is a named pipe"
+fi
+
+# 8. File descriptor is terminal
+if [ -t 1 ]
+then
+echo "Output is a terminal"
+else
+echo "Output is not a terminal"
+fi
+
+Write bash script to find sum of square of n numbers, read n from user
+
+#!/bin/bash
+echo "Enter how many numbers (n):"
+read n
+sum=0
+for (( i=1; i<=n; i++ ))
+do
+echo "Enter number $i:"
+read num
+sum=$((sum + num*num))
+done
+echo "Sum of squares = $sum"
+ 
+Write shell script to demonstrate Command Line Argument
+i.Positional Parameters
+ii.Using Flag
+iii.Using Loops with $@ – Loop Constructs
+iv. Use of $#,$*,$$,$? And S!
+
+#!/bin/bash
+
+echo "===== Positional Parameters ====="
+echo "Script name: $0"
+echo "1st argument: $1"
+echo "2nd argument: $2"
+
+echo ""
+echo "===== Special Variables ====="
+echo "Number of arguments (#): $#"
+echo "All arguments (*): $*"
+echo "Process ID ($$): $$"
+echo "Last command status ($?): $?"
+echo "Last background process ($!): $!"
+
+echo ""
+echo "===== Using Flag ====="
+if [ "$1" = "-a" ]
+then
+    echo "Option A selected"
+elif [ "$1" = "-b" ]
+then
+    echo "Option B selected"
+else
+    echo "No valid flag"
+fi
+
+echo ""
+echo "===== Loop using \$@ ====="
+for arg in "$@"
+do
+    echo "Argument: $arg"
+done
+ 
+Write Bash script to find whether character is vowel , consonant, Special Character
+or Digit use switch case
+
+#!/bin/bash
+echo "Enter a character:"
+read ch
+case $ch in
+[aeiouAEIOU]) echo "Vowel" ;;
+[a-zA-Z]) echo "Consonant" ;;
+[0-9]) echo "Digit" ;;
+*) echo "Special Character" ;;
+esac
+
+ 
+Write shell script to demonstrate Sort command with different sort command
+Option sort –b,sort –r,sort –o,sort –n,sort –M,sort –u,sort -ksort -t SEP
+
+#!/bin/bash
+
+echo "Creating sample file..."
+
+cat > data.txt <<EOF
+  apple
+banana
+Orange
+apple
+10
+2
+Jan
+Feb
+Mar
+EOF
+
+echo ""
+echo "Original File:"
+cat data.txt
+
+echo ""
+echo "1. sort -b (ignore leading spaces):"
+sort -b data.txt
+
+echo ""
+echo "2. sort -r (reverse order):"
+sort -r data.txt
+
+echo ""
+echo "3. sort -n (numeric sort):"
+sort -n data.txt
+
+echo ""
+echo "4. sort -M (month sort):"
+sort -M data.txt
+
+echo ""
+echo "5. sort -u (unique values):"
+sort -u data.txt
+
+echo ""
+echo "6. sort -o (output to file):"
+sort data.txt -o sorted.txt
+echo "Sorted data saved in sorted.txt"
+cat sorted.txt
+
+echo ""
+echo "7. sort -k (sort by column):"
+echo -e "3 Ram\n1 Shyam\n2 Amit" > col.txt
+sort -k1 col.txt
+
+echo ""
+echo "8. sort -t (delimiter):"
+echo -e "1:Ram\n3:Amit\n2:Shyam" > sep.txt
+sort -t ":" -k1 sep.txt
+ 
+Using WC Command Perform the following
+A. Display Line word and Character count in a file
+B. Count Number of Lines in a File
+C. Count Number of Words in a File
+D. Count Number of Characters in a File
+E. Count Number of Bytes in a File
+F. Display Length of Longest Line in File
+
+#!/bin/bash
+echo "Enter filename:"
+read file
+echo "A. Lines, Words, Characters:"
+wc "$file"
+echo "B. Number of Lines:"
+wc -l "$file"
+echo "C. Number of Words:"
+wc -w "$file"
+echo "D. Number of Characters:"
+wc -m "$file"
+echo "E. Number of Bytes:"
+wc -c "$file"
+echo "F. Length of Longest Line:"
+wc -L "$file"
+
+Write a shell program to check if a given string is a palindrome or not
+
+#!/bin/bash
+echo "Enter a string:"
+read str
+revstr=$(echo "$str" | rev)
+if [ "$str" = "$revstr" ]
+then
+echo "It is a palindrome"
+else
+echo "It is not a palindrome"
+fi
+ 
+Write script to Perform Following Operation
+1. Print ipaddress, Subnetmask,gateway and DNS
+2. Check the Number of Logged-in User
+3. Check Operating System Informaton
+4. Check System Memory usage
+5. Check System’s Disk Usage
+6. Check system Network Information
+7. Check system Architecture
+
+#!/bin/bash
+# 1. IP Address, Gateway, DNS
+echo ""
+echo "1. Network Details:"
+echo "IP Address:"
+hostname -I
+echo "Gateway:"
+ip route | grep default
+echo "DNS:"
+cat /etc/resolv.conf | grep nameserver
+# 2. Logged-in users
+echo ""
+echo "2. Logged-in Users:"
+who | wc -l
+# 3. Operating System Info
+echo ""
+echo "3. Operating System:"
+uname -a
+# 4. Memory Usage
+echo ""
+echo "4. Memory Usage:"
+free -h
+# 5. Disk Usage
+echo ""
+echo "5. Disk Usage:"
+df -h
+# 6. Network Information
+echo ""
+echo "6. Network Info:"
+ip a
+# 7. System Architecture
+echo ""
+echo "7. System Architecture:"
+uname –m
+ 
+Write shell script to find reverse of 5 digit number using while loop
+
+#!/bin/bash
+echo "Enter a 5-digit number:"
+read num
+rev=0
+while [ $num -gt 0 ]
+do
+rem=$((num % 10))
+rev=$((rev * 10 + rem))
+num=$((num / 10))
+done
+echo "Reversed number: $rev"
+
+Write shell script to generate prime number between limit specified by user using
+for loop
+
+#!/bin/bash
+echo "Enter limit:"
+read n
+echo "Prime numbers up to $n are:"
+for (( i=2; i<=n; i++ ))
+do
+    isPrime=1
+
+    for (( j=2; j<i; j++ ))
+    do
+        if [ $((i % j)) -eq 0 ]
+        then
+            isPrime=0
+            break
+        fi
+    done
+    if [ $isPrime -eq 1 ]
+    then
+        echo -n "$i "
+    fi
+done
+echo 
+Write shell script to Generate sum of N numbers. Read N from user and until loop
+
+#!/bin/bash
+echo "Enter value of N:"
+read n
+i=1
+sum=0
+until [ $i -gt $n ]
+do
+sum=$((sum + i))
+i=$((i + 1))
+done
+echo "Sum of first $n numbers is: $sum"
+
+ 
+Write shell script to display 4x4 matrix and read data from user from keyboard.
+Use for Loop 
+
+#!/bin/bash
+echo "Enter elements of 4x4 matrix:"
+declare -a matrix
+# Input
+for (( i=0; i<4; i++ ))
+do
+    for (( j=0; j<4; j++ ))
+    do
+        echo -n "Enter element [$i][$j]: "
+        read val
+        index=$((i*4 + j))
+        matrix[$index]=$val
+    done
+done
+
+echo ""
+echo "Matrix is:"
+
+# Output
+for (( i=0; i<4; i++ ))
+do
+    for (( j=0; j<4; j++ ))
+    do
+        index=$((i*4 + j))
+        echo -n "${matrix[$index]} "
+    done
+    echo ""
+done
+ 
+Write script to find sum of cube of 5 digit number 
+
+#!/bin/bash
+echo "Enter a 5-digit number:"
+read num
+sum=0
+while [ $num -gt 0 ]
+do
+    rem=$((num % 10))          # get last digit
+    cube=$((rem * rem * rem))  # cube of digit
+    sum=$((sum + cube))        # add to sum
+    num=$((num / 10))          # remove last digit
+done
+echo "Sum of cubes of digits: $sum"
