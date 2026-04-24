@@ -1,0 +1,102 @@
+SED EDITOR
+
+1. Replace first occurrence
+sed 's/old/new/' file.txt
+
+Only first old in each line changes
+
+2. Replace all occurrences
+sed 's/old/new/g' file.txt
+
+Every old becomes new
+
+3. Replace 2nd occurrence
+sed 's/old/new/2' file.txt
+
+Only second old in each line
+
+4. Replace from 2nd onwards
+sed 's/old/new/2g' file.txt
+
+ Skip first, replace rest
+
+5. Replace on specific line (line 3)
+sed '3s/old/new/' file.txt
+
+Only line 3 changes
+
+6. Replace in range (line 2–4)
+sed '2,4s/old/new/g' file.txt
+
+Only lines 2 to 4 affected
+
+7. Parenthesize first character
+sed 's/\b\(.\)/(\1)/g' file.txt
+
+Output: (t)his (i)s (o)ld ...
+
+8. Print only replaced lines
+sed -n 's/old/new/p' file.txt
+
+Shows only lines where replacement happened
+
+ 9. Duplicate replaced line
+sed 's/old/new/p' file.txt
+
+Modified lines appear twice
+
+10. Delete line (line 3)
+sed '3d' file.txt
+
+Line 3 removed from output
+
+
+AWK 
+
+1.all lines containing error
+awk 'tolower($0) ~ /error/ ' system.log
+
+2.total and avg salary 
+awk '{sum += $2} END {print "Total:", sum; print "Average:", sum/NR}' salaries.txt
+
+3.word count line 
+awk '{print "Words:", NF}' document.txt
+
+4. replace old with new 
+awk '{gsub(/old/,"new"); print}' data.txt
+
+5. csv 
+awk -F',' '{print $2, $4}' employees.csv
+
+
+
+Write Shell Script to perform Following Operations(Any 10)
+
+touch file.txt
+mkdir testdir
+mkfifo pipefile
+chmod 777 file.txt
+
+
+echo "Enter file name:"
+read f
+
+[ -e "$f" ] && echo "File exists" || echo "File does not exist"
+
+[ -b "$f" ] && echo "Block special file"
+[ -c "$f" ] && echo "Character special file"
+[ -d "$f" ] && echo "Directory"
+[ -f "$f" ] && echo "Regular file"
+[ -p "$f" ] && echo "Named pipe"
+
+[ -r "$f" ] && echo "Readable"
+[ -w "$f" ] && echo "Writable"
+[ -x "$f" ] && echo "Executable"
+
+[ -s "$f" ] && echo "Size is greater than 0"
+
+[ -u "$f" ] && echo "SUID bit set"
+[ -g "$f" ] && echo "SGID bit set"
+[ -k "$f" ] && echo "Sticky bit set"
+
+[ -t 0 ] && echo "Terminal associated"
