@@ -1,0 +1,17 @@
+sudo apt update
+sudo apt install nfs-kernel-server -y
+sudo mkdir -p /home/nfsshare1
+sudo chown nobody:nogroup /home/nfsshare1
+sudo chmod 777 /home/nfsshare1
+sudo nano /etc/exports
+(/home/nfsshare1 *(rw,sync,no_subtree_check))
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
+sudo systemctl status nfs-kernel-server
+sudo mkdir -p /mnt/test
+sudo mount localhost:/home/nfsshare1 /mnt/test
+df -h (you should see=localhost:/home/nfsshare1)
+TEST FILE:
+touch /home/nfsshare1/test.txt
+ls /mnt/test
+You should see test.txt
