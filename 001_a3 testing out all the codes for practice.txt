@@ -1,4 +1,14 @@
 SED EDITOR
+Example file.txt(sed) dont use same
+
+old data old record
+sample old text old here
+this old example line
+old appears here old again
+nothing to change here
+old old repeated values
+another old sample old case
+final test old entry
 
 1. Replace first occurrence
 sed 's/old/new/' file.txt
